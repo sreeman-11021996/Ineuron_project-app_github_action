@@ -1,0 +1,40 @@
+name: Python CI
+
+# Events 
+
+on:
+  push:
+    branches:
+        - main
+    
+  pull_request:
+    branches:
+        - main
+
+#  Workflow
+jobs:
+  test:
+    runs-on: ubuntu-latest      # Container
+    
+    steps:
+        
+        # Step 1 : check out the code from repository (to Container)
+        - name: Chack out the code
+          uses: actions/checkout@v2     # github action
+
+        # Step 2 : Set up Python Environment
+        - name: Setup Python Environment
+          uses: actions/setup-python@v2     # github action
+          with:
+            python-version: '3.8'
+            
+        # Step 3 : Install Dependencies
+        - name: Install dependencies
+          run: |
+            python -m pip install --upgrade pip
+            pip install -r requirements.txt
+                
+        # Step 4 : Run Tests
+        - name: Run tests
+          run: pytest   
+
